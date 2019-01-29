@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.example.demodatingapp.R
+import com.example.demodatingapp.model.PersonModel
 
 class PersonDetailIntroductionView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -19,13 +20,9 @@ class PersonDetailIntroductionView @JvmOverloads constructor(
         LayoutInflater.from(context).inflate(R.layout.view_person_details_introduction, this, true)
         mTitleEditText = findViewById(R.id.introduction_title)
         mBodyEditText = findViewById(R.id.introduction_body)
-
-        setup()
     }
 
-    private fun setup() {
-        mTitleEditText.text = "Első randis tervekről pár szóban"
-        val string = "Arra gondoltam, hogy valami jó olaszos kaja ki tudja hozni az emberek valódi énjét.\n\nSzóval... bedobhatnánk egy pizzát valamikor, szerintem az egészen király lenne.\n\nCiao!"
-        mBodyEditText.setText(string)
+    fun bind(model: PersonModel) {
+        mBodyEditText.setText(model.introduction)
     }
 }

@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import com.example.demodatingapp.R
+import com.example.demodatingapp.model.PersonModel
 
 class PersonDetailHeaderView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -32,19 +33,16 @@ class PersonDetailHeaderView @JvmOverloads constructor(
         mPersonJob = findViewById(R.id.person_job)
         mPersonRating = findViewById(R.id.person_rating)
         mPersonAge = findViewById(R.id.person_age)
-
-        setup()
     }
 
-    private fun setup() {
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.user_avatar)
+    fun bind(model: PersonModel) {
+        val bitmap = BitmapFactory.decodeResource(resources, model.avatar)
         val drawable = RoundedBitmapDrawableFactory.create(resources, bitmap)
         drawable.isCircular = true
-
         mAvatarImageView.setImageDrawable(drawable)
-        mPersonName.text = "Gyula"
-        mPersonJob.text = "Informatikus"
-        mPersonRating.text = "$STAR_EMOJI_STRING$STAR_EMOJI_STRING$STAR_EMOJI_STRING$STAR_EMOJI_STRING"
-        mPersonAge.text = "27 éves"
+        mPersonName.text = model.name
+        mPersonJob.text = model.job
+        mPersonRating.text = STAR_EMOJI_STRING.repeat(model.rating)
+        mPersonAge.text = model.formattedAge
     }
 }
