@@ -28,6 +28,12 @@
                     android:scaleType="centerCrop"
                     android:layout_marginTop="16dp" />
 
+            <com.example.demodatingapp.view.PersonDetailIntroductionView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/person_detail_introduction"
+                    android:padding="16dp"/>
+
         </LinearLayout>
 
     </ScrollView>
