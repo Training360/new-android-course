@@ -14,6 +14,11 @@ class PersonDetailHeaderView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
+    companion object {
+        @JvmStatic val STAR_EMOJI_HEX = 0x2B50
+        @JvmStatic val STAR_EMOJI_STRING = String(Character.toChars(STAR_EMOJI_HEX))
+    }
+
     private val mAvatarImageView: ImageView
     private val mPersonName: TextView
     private val mPersonJob: TextView
@@ -39,7 +44,7 @@ class PersonDetailHeaderView @JvmOverloads constructor(
         mAvatarImageView.setImageDrawable(drawable)
         mPersonName.text = "Gyula"
         mPersonJob.text = "Informatikus"
-        mPersonRating.text = "****"
+        mPersonRating.text = "$STAR_EMOJI_STRING$STAR_EMOJI_STRING$STAR_EMOJI_STRING$STAR_EMOJI_STRING"
         mPersonAge.text = "27 éves"
     }
 }
