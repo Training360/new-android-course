@@ -3,6 +3,7 @@ package com.example.demodatingapp.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import androidx.appcompat.widget.Toolbar
 import com.example.demodatingapp.R
 
 class MainActivity : AppCompatActivity() {
@@ -13,5 +14,8 @@ class MainActivity : AppCompatActivity() {
 
         val imageView = findViewById<ImageView>(R.id.person_image)
         imageView.setImageResource(R.drawable.clooney3)
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
     }
 }
