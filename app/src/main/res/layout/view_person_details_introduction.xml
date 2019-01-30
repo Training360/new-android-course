@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
+    <data>
+        <variable
+                name="person"
+                type="com.example.demodatingapp.model.PersonModel"/>
+    </data>
+
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -20,7 +27,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/introduction_title"
-        android:theme="@style/Jingle.PersonDetail.Introduction.Body"/>
+        android:theme="@style/Jingle.PersonDetail.Introduction.Body"
+        android:text="@{person.introduction}"/>
 
 </merge>
 </layout>
