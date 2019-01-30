@@ -22,11 +22,34 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "BASE_URL", "\"http://${getIP().toString()}:8080\""
+        }
         release {
+            buildConfigField "String", "BASE_URL", "\"http://${getIP().toString()}:8080\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+def getIP() {
+    InetAddress result = null;
+    Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces()
+    while (interfaces.hasMoreElements()) {
+        Enumeration<InetAddress> addresses = interfaces.nextElement().getInetAddresses()
+        while (addresses.hasMoreElements()) {
+            InetAddress address = addresses.nextElement()
+            if (!address.isLoopbackAddress()) {
+                if (address.isSiteLocalAddress()) {
+                    return address.getHostAddress()
+                } else if (result == null) {
+                    result = address
+                }
+            }
+        }
+    }
+    return (result != null ? result : InetAddress.getLocalHost()).getHostAddress()
 }
 
 dependencies {
@@ -39,5 +62,13 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha09'
     implementation 'android.arch.navigation:navigation-ui-ktx:1.0.0-alpha09'
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+
     kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
 }

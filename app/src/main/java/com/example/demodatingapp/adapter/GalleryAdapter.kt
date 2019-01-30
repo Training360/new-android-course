@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import com.example.demodatingapp.databinding.ItemGalleryBinding
+import com.squareup.picasso.Picasso
 
 interface GalleryListener {
     fun onGalleryItemClicked(position: Int, imageIds: Array<Int>)
@@ -26,7 +27,7 @@ class GalleryAdapter(private val imageIds: Array<Int>,
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val binding = ItemGalleryBinding.inflate(LayoutInflater.from(context), container, false)
 
-        binding.galleryItemImageView.setImageResource(imageIds[position])
+        Picasso.get().load(imageIds[position]).into(binding.galleryItemImageView)
 
         binding.galleryItemImageView.setOnClickListener {
             galleryListener?.onGalleryItemClicked(position, imageIds)

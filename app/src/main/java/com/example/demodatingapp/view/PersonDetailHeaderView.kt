@@ -1,15 +1,15 @@
 package com.example.demodatingapp.view
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.databinding.BindingAdapter
 import com.example.demodatingapp.databinding.ViewPersonDetailsHeaderBinding
+import com.example.demodatingapp.util.CircleTransform
+import com.squareup.picasso.Picasso
 
 class PersonDetailHeaderView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -34,11 +34,7 @@ class PersonDetailHeaderView @JvmOverloads constructor(
         @BindingAdapter("roundedResource")
         @JvmStatic
         fun ImageView.setRoundedResource(resId: Int) {
-            val resources = context.resources
-            val bitmap = BitmapFactory.decodeResource(resources, resId)
-            val drawable = RoundedBitmapDrawableFactory.create(resources, bitmap)
-            drawable.isCircular = true
-            setImageDrawable(drawable)
+            Picasso.get().load(resId).transform(CircleTransform()).into(this)
         }
     }
 }

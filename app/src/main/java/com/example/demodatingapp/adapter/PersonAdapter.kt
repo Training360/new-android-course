@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.demodatingapp.databinding.ListItemPersonBinding
 import com.example.demodatingapp.fragment.ListFragmentDirections
 import com.example.demodatingapp.model.PersonModel
+import com.squareup.picasso.Picasso
 
 class PersonAdapter: ListAdapter<PersonModel, PersonAdapter.ViewHolder>(PersonDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,7 +42,7 @@ class PersonAdapter: ListAdapter<PersonModel, PersonAdapter.ViewHolder>(PersonDi
             binding.apply {
                 person = item
                 this.clickListener = clickListener
-                binding.personPhoto.setImageResource(item.galleryImages.first())
+                Picasso.get().load(item.galleryImages.first()).into(binding.personPhoto)
                 binding.listItemHeader.binding.person = item
                 executePendingBindings()
             }
