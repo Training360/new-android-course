@@ -4,11 +4,16 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.viewpager.widget.PagerAdapter
-import com.example.demodatingapp.R
+import com.example.demodatingapp.databinding.ItemGalleryBinding
 
-class GalleryAdapter(private val imageIds: Array<Int>, private val context: Context): PagerAdapter() {
+interface GalleryListener {
+    fun onGalleryItemClicked(position: Int, imageIds: Array<Int>)
+}
+
+class GalleryAdapter(private val imageIds: Array<Int>,
+                     private val context: Context,
+                     private val galleryListener: GalleryListener? = null): PagerAdapter() {
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
         return view == `object`
@@ -19,13 +24,17 @@ class GalleryAdapter(private val imageIds: Array<Int>, private val context: Cont
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val inflater = LayoutInflater.from(context)
-        val layout = inflater.inflate(R.layout.item_gallery, container, false)
-        val imageView: ImageView = layout.findViewById(R.id.gallery_item_image_view)
-        imageView.setImageResource(imageIds[position])
+        val binding = ItemGalleryBinding.inflate(LayoutInflater.from(context), container, false)
 
-        container.addView(layout)
-        return layout
+        binding.galleryItemImageView.setImageResource(imageIds[position])
+
+        binding.galleryItemImageView.setOnClickListener {
+            galleryListener?.onGalleryItemClicked(position, imageIds)
+        }
+
+        container.addView(binding.root)
+
+        return binding.root
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
