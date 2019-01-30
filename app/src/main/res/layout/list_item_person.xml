@@ -7,6 +7,10 @@
         <variable
             name="person"
             type="com.example.demodatingapp.model.PersonModel"/>
+
+        <variable
+                name="clickListener"
+                type="android.view.View.OnClickListener"/>
     </data>
 
     <androidx.cardview.widget.CardView
@@ -15,7 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         app:cardElevation="5dp"
-        app:cardUseCompatPadding="true">
+        app:cardUseCompatPadding="true"
+        android:onClick="@{clickListener}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

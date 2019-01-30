@@ -10,12 +10,20 @@
             android:name="com.example.demodatingapp.fragment.ListFragment"
             android:label="@string/list_fragment_title"
             tools:layout="@layout/fragment_list">
+
+        <action
+                android:id="@+id/navigation_to_detail"
+                app:destination="@id/fragment_detail"/>
     </fragment>
 
     <fragment
         android:id="@+id/fragment_detail"
         android:name="com.example.demodatingapp.fragment.DetailFragment"
         tools:layout="@layout/fragment_detail">
+
+        <argument
+                android:name="personId"
+                app:argType="integer"/>
 
         <action
             android:id="@+id/navigation_to_gallery"

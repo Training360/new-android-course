@@ -22,13 +22,16 @@ class DetailFragment: Fragment(), GalleryListener {
                               savedInstanceState: Bundle?): View? {
         mBinding = FragmentDetailBinding.inflate(inflater, container, false)
         val model = ViewModelProviders.of(this).get(PersonDetailViewModel::class.java)
-        model.getUser().observe(this, Observer {
+
+        val personId = DetailFragmentArgs.fromBundle(arguments!!).personId
+        model.getUser(personId).observe(this, Observer {
             if (it != null) {
                 mBinding.gallery.mViewPager.adapter = GalleryAdapter(it.galleryImages, mBinding.root.context, this)
                 mBinding.personDetailHeader.binding.person = it
                 mBinding.personDetailIntroduction.binding.person = it
             }
         })
+
         return mBinding.root
     }
 

@@ -7,10 +7,10 @@ import com.example.demodatingapp.model.PersonModel
 class PersonDetailViewModel: ViewModel() {
     private lateinit var person: MutableLiveData<PersonModel>
 
-    fun getUser(): MutableLiveData<PersonModel> {
+    fun getUser(personId: Int): MutableLiveData<PersonModel> {
         if(!::person.isInitialized) {
             person = MutableLiveData()
-            person.value = PersonModel.georgeClooney()
+            person.value = PersonModel.list()[personId]
         }
         return person
     }
