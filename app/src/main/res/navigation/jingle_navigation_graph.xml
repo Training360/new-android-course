@@ -3,7 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/fragment_detail">
+    app:startDestination="@id/fragment_list">
+
+    <fragment
+            android:id="@+id/fragment_list"
+            android:name="com.example.demodatingapp.fragment.ListFragment"
+            android:label="@string/list_fragment_title"
+            tools:layout="@layout/fragment_list">
+    </fragment>
 
     <fragment
         android:id="@+id/fragment_detail"

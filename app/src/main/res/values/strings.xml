@@ -2,4 +2,6 @@
     <string name="app_name">Super Dating</string>
     <string name="detail_introduction_title">Első randis tervekről pár szóban</string>
     <string name="details_button_title">Részletek</string>
+    <string name="details_screen_title">Első randi…</string>
+    <string name="list_fragment_title">Közelben</string>
 </resources>
