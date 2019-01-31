@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
+import com.example.demodatingapp.R
 import com.example.demodatingapp.databinding.ItemGalleryBinding
 import com.example.demodatingapp.util.ImageLoader
 
@@ -27,7 +28,7 @@ class GalleryAdapter(private val imageNames: Array<String>,
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val binding = ItemGalleryBinding.inflate(LayoutInflater.from(context), container, false)
 
-        ImageLoader.load(imageNames[position], binding.galleryItemImageView)
+        ImageLoader.getInstance(context).load(imageNames[position], R.drawable.placeholder, binding.galleryItemImageView)
 
         binding.galleryItemImageView.setOnClickListener {
             galleryListener?.onGalleryItemClicked(position, imageNames)

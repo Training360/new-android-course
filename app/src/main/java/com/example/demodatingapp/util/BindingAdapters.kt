@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.example.demodatingapp.R
 
 object BindingAdapters {
 
@@ -20,7 +21,7 @@ object BindingAdapters {
     @BindingAdapter("imageName")
     @JvmStatic
     fun ImageView.setRemoteImage(name: String) {
-        ImageLoader.load(name, this)
+        ImageLoader.getInstance(context).load(name, R.drawable.placeholder, this)
     }
 
     @BindingAdapter("starCount")
@@ -35,7 +36,7 @@ object BindingAdapters {
     @JvmStatic
     fun ImageView.setRoundedResource(imageName: String?) {
         imageName?.let {
-            ImageLoader.loadCircular(it, this)
+            ImageLoader.getInstance(context).loadCircular(it, R.drawable.placeholder, this)
         }
     }
 }
