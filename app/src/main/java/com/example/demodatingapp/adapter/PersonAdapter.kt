@@ -3,14 +3,11 @@ package com.example.demodatingapp.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demodatingapp.databinding.ListItemPersonBinding
 import com.example.demodatingapp.fragment.ListFragmentDirections
-import com.example.demodatingapp.util.ImageLoader
 import com.example.demodatingapp.vo.Person
 
 class PersonAdapter: ListAdapter<Person, PersonAdapter.ViewHolder>(PersonDiffCallback()) {
@@ -47,14 +44,6 @@ class PersonAdapter: ListAdapter<Person, PersonAdapter.ViewHolder>(PersonDiffCal
                 binding.listItemHeader.binding.person = item
                 executePendingBindings()
             }
-        }
-    }
-
-    companion object {
-        @BindingAdapter("imageName")
-        @JvmStatic
-        fun ImageView.setRemoteImage(name: String) {
-            ImageLoader.load(name, this)
         }
     }
 }

@@ -1,70 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/outer_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-    <androidx.core.widget.NestedScrollView
+    <data>
+        <variable name="personResource"
+                  type="com.example.demodatingapp.vo.Resource"/>
+
+        <variable name="retryCallback"
+                  type="com.example.demodatingapp.util.RetryCallback"/>
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/outer_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="match_parent">
 
-        <LinearLayout
+        <include
+                layout="@layout/status_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                app:resource="@{personResource}"/>
 
-            <com.example.demodatingapp.view.PersonDetailHeaderView
+        <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/person_detail_header"/>
+                    android:orientation="vertical">
 
-            <com.example.demodatingapp.view.PersonDetailIntroductionView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/person_detail_introduction"
-                    android:padding="16dp"/>
+                <com.example.demodatingapp.view.PersonDetailHeaderView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/person_detail_header"
+                        app:visibleGone="@{personResource.data != null}"/>
 
-        </LinearLayout>
+                <com.example.demodatingapp.view.PersonDetailIntroductionView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/person_detail_introduction"
+                        android:padding="16dp"
+                        app:visibleGone="@{personResource.data != null}"/>
 
-    </androidx.core.widget.NestedScrollView>
+            </LinearLayout>
 
-    <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:fitsSystemWindows="true">
+        </androidx.core.widget.NestedScrollView>
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
+        <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-                app:contentScrim="@android:color/transparent"
-                app:expandedTitleMarginStart="48dp"
-                app:expandedTitleMarginEnd="64dp"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 android:fitsSystemWindows="true">
 
-            <com.example.demodatingapp.view.PersonDetailGalleryView
-                    android:id="@+id/gallery"
+            <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
+                    android:layout_height="wrap_content"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                    app:contentScrim="@android:color/transparent"
+                    app:expandedTitleMarginStart="48dp"
+                    app:expandedTitleMarginEnd="64dp"
                     android:fitsSystemWindows="true"
-                    app:layout_collapseMode="parallax"/>
+                    app:visibleGone="@{personResource.data != null}">
 
-            <androidx.appcompat.widget.Toolbar
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:id="@+id/toolbar"
-                    app:titleTextColor="@android:color/primary_text_dark"
-                    app:layout_collapseMode="pin"/>
+                <com.example.demodatingapp.view.PersonDetailGalleryView
+                        android:id="@+id/gallery"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:fitsSystemWindows="true"
+                        app:layout_collapseMode="parallax"/>
 
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
+                <androidx.appcompat.widget.Toolbar
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:id="@+id/toolbar"
+                        app:titleTextColor="@android:color/primary_text_dark"
+                        app:layout_collapseMode="pin"/>
 
-    </com.google.android.material.appbar.AppBarLayout>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <include
+                layout="@layout/status_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:resource="@{personResource}"
+                app:retryCallback="@{() -> retryCallback.retry()}"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </layout>

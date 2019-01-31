@@ -3,13 +3,44 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/person_list"
+    <data>
+        <import type="com.example.demodatingapp.vo.Resource"/>
+        <import type="com.example.demodatingapp.util.RetryCallback"/>
+
+        <variable
+                name="listResource"
+                type="Resource"/>
+
+        <variable name="retryCallback"
+                  type="RetryCallback"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:context="com.example.demodatingapp.activity.MainActivity"
-            tools:listItem="@layout/list_item_person"/>
+            android:layout_height="match_parent">
+
+        <include
+                layout="@layout/status_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:resource="@{listResource}"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/person_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:context="com.example.demodatingapp.activity.MainActivity"
+                tools:listItem="@layout/list_item_person"/>
+
+        <include
+                layout="@layout/status_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:resource="@{listResource}"
+                app:retryCallback="@{retryCallback}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

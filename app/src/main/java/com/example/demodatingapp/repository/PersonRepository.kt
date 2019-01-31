@@ -18,6 +18,7 @@ class PersonRepository(private val jingleApi: JingleApi) {
 
     fun getPersons(): LiveData<Resource<List<Person>>> {
         val result = MediatorLiveData<Resource<List<Person>>>()
+        result.postValue(Resource.loading(null))
         val networkSource = jingleApi.getPersons()
         result.addSource(networkSource) {
             when(it) {
@@ -30,6 +31,7 @@ class PersonRepository(private val jingleApi: JingleApi) {
 
     fun getPerson(id: Int): LiveData<Resource<Person>> {
         val result = MediatorLiveData<Resource<Person>>()
+        result.postValue(Resource.loading(null))
         val networkSource = jingleApi.getPerson(id)
         result.addSource(networkSource) {
             when(it) {

@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.demodatingapp.adapter.PersonAdapter
 import com.example.demodatingapp.databinding.FragmentListBinding
+import com.example.demodatingapp.util.RetryCallback
 import com.example.demodatingapp.viewmodel.PersonListViewModel
 import com.example.demodatingapp.viewmodel.factory.PersonViewModelFactory
 
@@ -16,16 +17,31 @@ class ListFragment: Fragment() {
 
     lateinit var viewModel: PersonListViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentListBinding.inflate(inflater, container, false)
+    lateinit var mBinding: FragmentListBinding
 
-        viewModel = ViewModelProviders.of(this, PersonViewModelFactory.INSTANCE).get(PersonListViewModel::class.java)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        mBinding = FragmentListBinding.inflate(inflater, container, false)
+
+        viewModel = ViewModelProviders.of(this, PersonViewModelFactory.INSTANCE)
+            .get(PersonListViewModel::class.java)
+
         val adapter = PersonAdapter()
-        binding.personList.adapter = adapter
+
+        mBinding.personList.adapter = adapter
         viewModel.persons.observe(this, Observer {
+            mBinding.listResource = it
             if (it != null) adapter.submitList(it.data)
         })
 
-        return binding.root
+        return mBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mBinding.retryCallback = object : RetryCallback {
+            override fun retry() {
+                viewModel.retry()
+            }
+        }
     }
 }

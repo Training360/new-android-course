@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="com.example.demodatingapp.vo.Resource"/>
+        <import type="com.example.demodatingapp.vo.Status"/>
+        <import type="com.example.demodatingapp.util.RetryCallback"/>
+
+        <variable
+                name="resource"
+                type="Resource"/>
+
+        <variable
+                name="retryCallback"
+                type="RetryCallback"/>
+    </data>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@android:color/background_dark"
+            android:alpha="0.3"
+            android:gravity="center"
+            app:visibleGone="@{resource.data == null}">
+
+        <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                style="?attr/progressBarStyle"
+                app:visibleGone="@{resource.status == Status.LOADING}"
+                android:layout_margin="8dp"/>
+
+        <TextView
+                android:id="@+id/error_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:layout_margin="32dp"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:text="@{resource.message ?? @string/error_unknown}"
+                app:visibleGone="@{resource.status == Status.ERROR}"/>
+
+        <Button
+                android:id="@+id/retry_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:text="@string/retry_button_text"
+                android:onClick="@{() -> retryCallback.retry()}"
+                app:visibleGone="@{resource.status == Status.ERROR}"/>
+
+    </LinearLayout>
+
+</layout>

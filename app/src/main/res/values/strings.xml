@@ -5,4 +5,7 @@
     <string name="details_screen_title">Első randi…</string>
     <string name="list_fragment_title">Közelben</string>
     <string name="age_format">%d éves</string>
+    <string name="error_unknown">Ismeretlen hiba</string>
+    <string name="no_internet_error">Nincs internet kapcsolat</string>
+    <string name="retry_button_text">Újra</string>
 </resources>
