@@ -27,7 +27,8 @@ class DetailFragment: Fragment(), GalleryListener {
 
         mBinding = FragmentDetailBinding.inflate(inflater, container, false)
 
-        viewModel = ViewModelProviders.of(this, PersonViewModelFactory.INSTANCE).get(PersonDetailViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, PersonViewModelFactory(application()))
+            .get(PersonDetailViewModel::class.java)
 
         val personId = DetailFragmentArgs.fromBundle(arguments!!).personId
         viewModel.user.observe(this, Observer {

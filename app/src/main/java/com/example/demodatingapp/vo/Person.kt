@@ -1,7 +1,15 @@
 package com.example.demodatingapp.vo
 
+import androidx.room.Entity
+import androidx.room.Index
 import com.google.gson.annotations.SerializedName
 
+@Entity(
+    indices = [
+        Index("id")
+    ],
+    primaryKeys = ["id"]
+)
 data class Person(
     val id: Int,
     val avatar: String,

@@ -22,7 +22,7 @@ class ListFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mBinding = FragmentListBinding.inflate(inflater, container, false)
 
-        viewModel = ViewModelProviders.of(this, PersonViewModelFactory.INSTANCE)
+        viewModel = ViewModelProviders.of(this, PersonViewModelFactory(application()))
             .get(PersonListViewModel::class.java)
 
         val adapter = PersonAdapter()
