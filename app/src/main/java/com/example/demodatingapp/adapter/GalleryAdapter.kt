@@ -28,7 +28,8 @@ class GalleryAdapter(private val imageNames: Array<String>,
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val binding = ItemGalleryBinding.inflate(LayoutInflater.from(context), container, false)
 
-        ImageLoader.getInstance(context).load(imageNames[position], R.drawable.placeholder, binding.galleryItemImageView)
+        ImageLoader.getInstance(context)
+            .load(imageNames[position], R.drawable.placeholder, R.drawable.error_image, binding.galleryItemImageView)
 
         binding.galleryItemImageView.setOnClickListener {
             galleryListener?.onGalleryItemClicked(position, imageNames)

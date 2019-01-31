@@ -21,7 +21,7 @@ object BindingAdapters {
     @BindingAdapter("imageName")
     @JvmStatic
     fun ImageView.setRemoteImage(name: String) {
-        ImageLoader.getInstance(context).load(name, R.drawable.placeholder, this)
+        ImageLoader.getInstance(context).load(name, R.drawable.placeholder, R.drawable.error_image, this)
     }
 
     @BindingAdapter("starCount")
@@ -36,7 +36,7 @@ object BindingAdapters {
     @JvmStatic
     fun ImageView.setRoundedResource(imageName: String?) {
         imageName?.let {
-            ImageLoader.getInstance(context).loadCircular(it, R.drawable.placeholder, this)
+            ImageLoader.getInstance(context).loadCircular(it, R.drawable.placeholder, R.drawable.error_image, this)
         }
     }
 }
