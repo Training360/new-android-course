@@ -4,4 +4,5 @@
     <string name="details_button_title">Részletek</string>
     <string name="details_screen_title">Első randi…</string>
     <string name="list_fragment_title">Közelben</string>
+    <string name="age_format">%d éves</string>
 </resources>

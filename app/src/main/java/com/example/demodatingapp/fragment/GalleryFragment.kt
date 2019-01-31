@@ -23,7 +23,7 @@ class GalleryFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val args = GalleryFragmentArgs.fromBundle(arguments!!)
         mBinding.fullscreenGallery.mViewPager.adapter = GalleryAdapter(
-            args.images.toTypedArray(),
+            args.images,
             mBinding.root.context)
         mBinding.fullscreenGallery.mViewPager.currentItem = args.selectedIndex
     }

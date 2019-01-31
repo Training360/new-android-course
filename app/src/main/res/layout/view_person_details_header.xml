@@ -4,7 +4,7 @@
     <data>
         <variable
                 name="person"
-                type="com.example.demodatingapp.model.PersonModel"/>
+                type="com.example.demodatingapp.vo.Person"/>
     </data>
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
@@ -73,7 +73,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@android:color/darker_gray"
-            android:text="@{person.formattedAge}"/>
+            android:text="@{@string/age_format(person.age)}"/>
 
 </merge>
 </layout>

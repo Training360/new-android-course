@@ -1,13 +1,8 @@
 package com.example.demodatingapp.viewmodel
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.demodatingapp.model.PersonModel
+import com.example.demodatingapp.repository.PersonRepository
 
-class PersonListViewModel: ViewModel() {
-    val persons = MutableLiveData<List<PersonModel>>()
-
-    init {
-        persons.value = PersonModel.list()
-    }
+class PersonListViewModel(repository: PersonRepository): ViewModel() {
+    val persons = repository.getPersons()
 }

@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import com.example.demodatingapp.databinding.ItemGalleryBinding
-import com.squareup.picasso.Picasso
+import com.example.demodatingapp.util.ImageLoader
 
 interface GalleryListener {
-    fun onGalleryItemClicked(position: Int, imageIds: Array<Int>)
+    fun onGalleryItemClicked(position: Int, imageIds: Array<String>)
 }
 
-class GalleryAdapter(private val imageIds: Array<Int>,
+class GalleryAdapter(private val imageNames: Array<String>,
                      private val context: Context,
                      private val galleryListener: GalleryListener? = null): PagerAdapter() {
 
@@ -21,16 +21,16 @@ class GalleryAdapter(private val imageIds: Array<Int>,
     }
 
     override fun getCount(): Int {
-        return imageIds.size
+        return imageNames.size
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val binding = ItemGalleryBinding.inflate(LayoutInflater.from(context), container, false)
 
-        Picasso.get().load(imageIds[position]).into(binding.galleryItemImageView)
+        ImageLoader.load(imageNames[position], binding.galleryItemImageView)
 
         binding.galleryItemImageView.setOnClickListener {
-            galleryListener?.onGalleryItemClicked(position, imageIds)
+            galleryListener?.onGalleryItemClicked(position, imageNames)
         }
 
         container.addView(binding.root)

@@ -8,8 +8,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.example.demodatingapp.databinding.ViewPersonDetailsHeaderBinding
-import com.example.demodatingapp.util.CircleTransform
-import com.squareup.picasso.Picasso
+import com.example.demodatingapp.util.ImageLoader
 
 class PersonDetailHeaderView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -33,8 +32,10 @@ class PersonDetailHeaderView @JvmOverloads constructor(
 
         @BindingAdapter("roundedResource")
         @JvmStatic
-        fun ImageView.setRoundedResource(resId: Int) {
-            Picasso.get().load(resId).transform(CircleTransform()).into(this)
+        fun ImageView.setRoundedResource(imageName: String?) {
+            imageName?.let {
+                ImageLoader.loadCircular(it, this)
+            }
         }
     }
 }

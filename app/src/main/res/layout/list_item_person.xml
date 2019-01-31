@@ -6,7 +6,7 @@
     <data>
         <variable
             name="person"
-            type="com.example.demodatingapp.model.PersonModel"/>
+            type="com.example.demodatingapp.vo.Person"/>
 
         <variable
                 name="clickListener"
@@ -39,7 +39,8 @@
                 app:layout_constraintStart_toStartOf="@id/list_item_header"
                 app:layout_constraintTop_toBottomOf="@id/list_item_header"
                 android:adjustViewBounds="true"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                app:imageName="@{person.galleryImages[0]}"/>
 
             <TextView
                 android:paddingStart="20dp"

@@ -3,15 +3,17 @@ package com.example.demodatingapp.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demodatingapp.databinding.ListItemPersonBinding
 import com.example.demodatingapp.fragment.ListFragmentDirections
-import com.example.demodatingapp.model.PersonModel
-import com.squareup.picasso.Picasso
+import com.example.demodatingapp.util.ImageLoader
+import com.example.demodatingapp.vo.Person
 
-class PersonAdapter: ListAdapter<PersonModel, PersonAdapter.ViewHolder>(PersonDiffCallback()) {
+class PersonAdapter: ListAdapter<Person, PersonAdapter.ViewHolder>(PersonDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ListItemPersonBinding.inflate(
@@ -38,14 +40,21 @@ class PersonAdapter: ListAdapter<PersonModel, PersonAdapter.ViewHolder>(PersonDi
 
     class ViewHolder(private val binding: ListItemPersonBinding)
         : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: PersonModel, clickListener: View.OnClickListener) {
+        fun bind(item: Person, clickListener: View.OnClickListener) {
             binding.apply {
                 person = item
                 this.clickListener = clickListener
-                Picasso.get().load(item.galleryImages.first()).into(binding.personPhoto)
                 binding.listItemHeader.binding.person = item
                 executePendingBindings()
             }
+        }
+    }
+
+    companion object {
+        @BindingAdapter("imageName")
+        @JvmStatic
+        fun ImageView.setRemoteImage(name: String) {
+            ImageLoader.load(name, this)
         }
     }
 }

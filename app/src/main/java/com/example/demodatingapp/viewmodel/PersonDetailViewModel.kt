@@ -1,17 +1,15 @@
 package com.example.demodatingapp.viewmodel
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.example.demodatingapp.model.PersonModel
+import com.example.demodatingapp.repository.PersonRepository
+import com.example.demodatingapp.vo.Person
+import com.example.demodatingapp.vo.Resource
 
-class PersonDetailViewModel: ViewModel() {
-    private lateinit var person: MutableLiveData<PersonModel>
+class PersonDetailViewModel(private val repository: PersonRepository): ViewModel() {
 
-    fun getUser(personId: Int): MutableLiveData<PersonModel> {
-        if(!::person.isInitialized) {
-            person = MutableLiveData()
-            person.value = PersonModel.list()[personId]
-        }
-        return person
+    fun getUser(index: Int): LiveData<Resource<Person>> {
+        return repository.getPerson(index)
     }
+
 }

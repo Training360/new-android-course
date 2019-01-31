@@ -42,7 +42,7 @@
 
         <argument
                 android:name="images"
-                app:argType="integer[]"/>
+                app:argType="string[]"/>
 
     </fragment>
 
