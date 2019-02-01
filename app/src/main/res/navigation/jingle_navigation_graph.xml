@@ -14,6 +14,10 @@
         <action
                 android:id="@+id/navigation_to_detail"
                 app:destination="@id/fragment_detail"/>
+
+        <action
+                android:id="@+id/navigation_to_map"
+                app:destination="@id/fragment_map"/>
     </fragment>
 
     <fragment
@@ -29,6 +33,17 @@
             android:id="@+id/navigation_to_gallery"
             app:destination="@id/fragment_gallery"/>
 
+    </fragment>
+
+    <fragment
+            android:id="@+id/fragment_map"
+            android:name="com.example.demodatingapp.fragment.MapFragment"
+            android:label="@string/map_menu_name"
+            tools:layout="@layout/fragment_map">
+
+        <action
+                android:id="@+id/detail_from_map"
+                app:destination="@id/fragment_detail"/>
     </fragment>
 
     <fragment

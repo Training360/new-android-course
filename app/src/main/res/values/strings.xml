@@ -1,4 +1,5 @@
 <resources>
+    <string translatable="false" name="google_maps_key">AIzaSyA1ePqBfxZdCu0ztk5CT8Jxi07nvanVCNo</string>
     <string name="app_name">Super Dating</string>
     <string name="detail_introduction_title">Első randis tervekről pár szóban</string>
     <string name="details_button_title">Részletek</string>
@@ -8,4 +9,5 @@
     <string name="error_unknown">Ismeretlen hiba</string>
     <string name="no_internet_error">Nincs internet kapcsolat</string>
     <string name="retry_button_text">Újra</string>
+    <string name="map_menu_name">Térkép</string>
 </resources>
