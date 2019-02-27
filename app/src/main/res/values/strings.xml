@@ -10,4 +10,10 @@
     <string name="no_internet_error">Nincs internet kapcsolat</string>
     <string name="retry_button_text">Újra</string>
     <string name="map_menu_name">Térkép</string>
+    <string name="add_person_fragment_title">Mik a terveid?</string>
+    <string name="person_age_hint">Kor</string>
+    <string name="person_job_hint">Foglalkozás</string>
+    <string name="person_inroduction_title">Mik a terveid az első randira?</string>
+    <string name="person_introduction_hint">Írd le a randi részleteit</string>
+    <string name="person_rating_hint">Értékeld egytől ötig</string>
 </resources>

@@ -18,7 +18,16 @@
         <action
                 android:id="@+id/navigation_to_map"
                 app:destination="@id/fragment_map"/>
+
+        <action
+                android:id="@+id/navigation_to_add_person"
+                app:destination="@id/fragment_add_person"/>
     </fragment>
+
+    <fragment
+            android:id="@+id/fragment_add_person"
+            android:name="com.example.demodatingapp.fragment.AddPersonFragment"
+            android:label="@string/add_person_fragment_title"/>
 
     <fragment
         android:id="@+id/fragment_detail"
