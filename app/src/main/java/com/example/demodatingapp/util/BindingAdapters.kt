@@ -1,10 +1,12 @@
 package com.example.demodatingapp.util
 
+import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.example.demodatingapp.R
+import com.google.android.material.textfield.TextInputEditText
 
 object BindingAdapters {
 
@@ -37,6 +39,22 @@ object BindingAdapters {
     fun ImageView.setRoundedResource(imageName: String?) {
         imageName?.let {
             ImageLoader.getInstance(context).loadCircular(it, R.drawable.placeholder, R.drawable.error_image, this)
+        }
+    }
+
+    @BindingAdapter("roundedResource")
+    @JvmStatic
+    fun ImageView.setRoundedResource(url: Uri) = ImageLoader.getInstance(context!!)
+        .loadCircular(url, R.drawable.placeholder, R.drawable.error_image, this)
+
+    @BindingAdapter("error")
+    @JvmStatic
+    fun TextInputEditText.setErrorResource(resource: Int) {
+        error = if (resource != 0) {
+            val errorString = context.getString(resource)
+            errorString
+        } else {
+            null
         }
     }
 }

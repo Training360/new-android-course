@@ -16,4 +16,8 @@
     <string name="person_inroduction_title">Mik a terveid az első randira?</string>
     <string name="person_introduction_hint">Írd le a randi részleteit</string>
     <string name="person_rating_hint">Értékeld egytől ötig</string>
+    <string name="person_age_error">18 és 99 között kell lennie</string>
+    <string name="person_job_error">Kötelező kitölteni</string>
+    <string name="person_rating_error">1 és 5 között kell lennie</string>
+    <string name="person_introduction_error">Legalább 50 karakter hosszúnak kell lennie</string>
 </resources>

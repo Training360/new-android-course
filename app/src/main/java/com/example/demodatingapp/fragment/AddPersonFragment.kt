@@ -14,6 +14,7 @@ import com.example.demodatingapp.R
 import com.example.demodatingapp.databinding.FragmentAddPersonBinding
 import com.example.demodatingapp.util.ImagePicker
 import com.example.demodatingapp.viewmodel.AddPersonViewModel
+import com.example.demodatingapp.viewmodel.factory.PersonViewModelFactory
 
 class AddPersonFragment: Fragment() {
 
@@ -35,12 +36,19 @@ class AddPersonFragment: Fragment() {
             startActivityForResult(Intent.createChooser(intent, "Válassz képet"), REQUEST_CODE_PICK_IMAGE)
         }
 
+        binding.finishAddPersonButton.setOnClickListener {
+            if (viewModel.validate()) {
+                // continue with adding the new person
+            }
+        }
+
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(AddPersonViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, PersonViewModelFactory(application()))
+            .get(AddPersonViewModel::class.java)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
