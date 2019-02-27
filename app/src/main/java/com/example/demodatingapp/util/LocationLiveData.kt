@@ -42,4 +42,16 @@ class LocationLiveData(val context: Context): LiveData<Location>(), LocationList
     override fun onProviderEnabled(provider: String?) {}
 
     override fun onProviderDisabled(provider: String?) {}
+
+    @SuppressLint("MissingPermission")
+    @RequiresPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+    fun lastLocation(): Location {
+        val providers = locationManager.getProviders(true)
+
+        return providers.mapNotNull { provider ->
+            locationManager.getLastKnownLocation(provider)
+        }.minBy { location ->
+            location.accuracy
+        }!!
+    }
 }

@@ -1,13 +1,25 @@
 package com.example.demodatingapp.viewmodel
 
-import android.graphics.Bitmap
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.demodatingapp.BR
 import com.example.demodatingapp.R
+import com.example.demodatingapp.network.api.JingleApi
+import com.example.demodatingapp.repository.PersonRepository
+import com.example.demodatingapp.threading.JingleExecutors
+import com.example.demodatingapp.vo.CreatePersonModel
 import com.example.demodatingapp.vo.Person
 import com.example.demodatingapp.vo.Place
+import com.example.demodatingapp.vo.Resource
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.Response
+import java.io.File
+import java.io.IOException
 
 class PersonFields(): BaseObservable() {
 
@@ -67,13 +79,9 @@ class PersonFields(): BaseObservable() {
             }
         }
 
-
-
     val displayName = currentUser!!.name
 
-    val photoUrl = currentUser!!.galleryImages.get(0)
-
-    var bitmap: Bitmap? = null
+    var bigPhotoName: String? = null
 
     @Bindable
     var jobError = 0
@@ -111,6 +119,8 @@ class PersonFields(): BaseObservable() {
             }
         }
 
+    var location: Place? = null
+
     fun validate(): Boolean {
         var result = true
         if (age !in 18..99) {
@@ -141,9 +151,59 @@ class PersonFields(): BaseObservable() {
     }
 }
 
-class AddPersonViewModel : ViewModel() {
+class AddPersonViewModel(private val personRepository: PersonRepository) : ViewModel() {
     fun validate(): Boolean {
         return personFields.validate()
+    }
+
+    private val trigger = MutableLiveData<Boolean>()
+
+    val addPerson: LiveData<Resource<List<Person>>> = Transformations
+        .switchMap(trigger) {
+            val person = CreatePersonModel(personFields.bigPhotoName!!,
+                personFields.displayName!!,
+                personFields.rating,
+                personFields.job,
+                personFields.age,
+                personFields.introduction,
+                listOf(personFields.bigPhotoName!!),
+                personFields.location!!,
+                "noone@email.com"
+            )
+            return@switchMap personRepository.addPerson(person)
+        }
+
+
+    fun upload(file: File, callback: (String?) -> Unit) {
+        JingleExecutors.INSTANCE.networkIO.execute {
+            JingleApi.uploadImage(file).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    JingleExecutors.INSTANCE.mainThread.execute {
+                        callback(null)
+                    }
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    JingleExecutors.INSTANCE.mainThread.execute {
+                        if (response.isSuccessful) {
+                            val fileName = file.name
+                            personFields.bigPhotoName = fileName
+                            callback(fileName)
+                        }
+                    }
+                }
+            })
+        }
+    }
+
+    fun retry() {
+        trigger.value.let {
+            if (it == null) {
+                trigger.value = false
+            } else {
+                trigger.value = !it
+            }
+        }
     }
 
     val personFields = PersonFields()

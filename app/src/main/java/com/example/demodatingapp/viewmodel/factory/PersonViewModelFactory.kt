@@ -23,7 +23,7 @@ class PersonViewModelFactory(private val application: JingleApplication): ViewMo
             modelClass.isAssignableFrom(PersonListViewModel::class.java) -> PersonListViewModel(repository) as T
             modelClass.isAssignableFrom(PersonDetailViewModel::class.java) -> PersonDetailViewModel(repository) as T
             modelClass.isAssignableFrom(MapViewModel::class.java) -> MapViewModel(repository) as T
-            modelClass.isAssignableFrom(AddPersonViewModel::class.java) -> AddPersonViewModel() as T
+            modelClass.isAssignableFrom(AddPersonViewModel::class.java) -> AddPersonViewModel(repository) as T
             else -> throw IllegalArgumentException("$modelClass is not available in this factory.")
         }
     }

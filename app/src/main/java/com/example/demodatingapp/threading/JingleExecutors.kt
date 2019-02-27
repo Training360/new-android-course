@@ -8,6 +8,11 @@ import java.util.concurrent.Executors
 class JingleExecutors(val diskIO: Executor,
                       val networkIO: Executor,
                       val mainThread: Executor) {
+
+    companion object {
+        val INSTANCE = JingleExecutors()
+    }
+
     constructor() : this(
             Executors.newSingleThreadExecutor(),
             Executors.newFixedThreadPool(3),

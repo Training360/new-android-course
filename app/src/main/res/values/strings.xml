@@ -20,4 +20,5 @@
     <string name="person_job_error">Kötelező kitölteni</string>
     <string name="person_rating_error">1 és 5 között kell lennie</string>
     <string name="person_introduction_error">Legalább 50 karakter hosszúnak kell lennie</string>
+    <string name="image_chooser_title">Válassz képet</string>
 </resources>
