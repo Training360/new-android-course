@@ -52,7 +52,7 @@ class PersonRepository(private val jingleApi: JingleApi,
             }
 
             override fun shouldFetch(data: Person?): Boolean {
-                return data == null
+                return personListRateLimit.shouldFetch(rateLimiterKey)
             }
 
             override fun loadFromDb(): LiveData<Person> {
@@ -65,6 +65,25 @@ class PersonRepository(private val jingleApi: JingleApi,
         val result = MediatorLiveData<Resource<List<Person>>>()
         result.postValue(Resource.loading(null))
         val networkSource = jingleApi.addPerson(createPersonModel)
+        result.addSource(networkSource) { apiResponse ->
+            when (apiResponse) {
+                is ApiErrorResponse -> result.postValue(Resource.error(apiResponse.errorMessage, null))
+                is ApiSuccessResponse -> {
+                    executors.diskIO.execute {
+                        personDao.insert(apiResponse.body)
+                        personListRateLimit.reset(rateLimiterKey)
+                        result.postValue(Resource.success(apiResponse.body))
+                    }
+                }
+            }
+        }
+        return result
+    }
+
+    fun updatePerson(person: Person): LiveData<Resource<Person>> {
+        val result = MediatorLiveData<Resource<Person>>()
+        result.postValue(Resource.loading(null))
+        val networkSource = jingleApi.updatePerson(person.id, person)
         result.addSource(networkSource) { apiResponse ->
             when (apiResponse) {
                 is ApiErrorResponse -> result.postValue(Resource.error(apiResponse.errorMessage, null))

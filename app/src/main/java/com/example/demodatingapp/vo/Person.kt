@@ -4,6 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Index
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @Entity(
     indices = [
@@ -24,4 +25,4 @@ data class Person(
     val owner: String
 )
 
-data class Place(val latitude: Double, val longitude: Double)
+data class Place(val latitude: Double, val longitude: Double): Serializable

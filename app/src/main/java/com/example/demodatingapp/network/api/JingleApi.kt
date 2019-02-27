@@ -68,4 +68,7 @@ interface JingleApi {
 
     @POST("persons")
     fun addPerson(@Body createPersonModel: CreatePersonModel): LiveData<ApiResponse<List<Person>>>
+
+    @POST("persons/{id}")
+    fun updatePerson(@Path("id") id: Int, @Body person: Person): LiveData<ApiResponse<Person>>
 }

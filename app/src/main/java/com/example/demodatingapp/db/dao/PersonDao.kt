@@ -1,10 +1,7 @@
 package com.example.demodatingapp.db.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.demodatingapp.vo.Person
 
 @Dao
@@ -22,4 +19,6 @@ interface PersonDao {
     @Query("SELECT * FROM person WHERE id = :id")
     fun findById(id: Int): LiveData<Person>
 
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun update(person: Person)
 }

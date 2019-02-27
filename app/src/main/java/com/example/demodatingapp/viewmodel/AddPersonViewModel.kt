@@ -11,6 +11,7 @@ import com.example.demodatingapp.R
 import com.example.demodatingapp.network.api.JingleApi
 import com.example.demodatingapp.repository.PersonRepository
 import com.example.demodatingapp.threading.JingleExecutors
+import com.example.demodatingapp.util.ImageUploader
 import com.example.demodatingapp.vo.CreatePersonModel
 import com.example.demodatingapp.vo.Person
 import com.example.demodatingapp.vo.Place
@@ -25,6 +26,7 @@ import java.io.Serializable
 class PersonFields(): BaseObservable(), Serializable {
 
     constructor(person: Person): this() {
+        id = person.id
         job = person.job
         rating = person.rating
         age = person.age
@@ -33,6 +35,8 @@ class PersonFields(): BaseObservable(), Serializable {
         location = person.lastLocation
         bigPhotoName = person.galleryImages.first()
     }
+
+    var id = 0
 
     @Bindable
     var job = String()
@@ -174,25 +178,7 @@ class AddPersonViewModel(private val personRepository: PersonRepository) : ViewM
 
 
     fun upload(file: File, callback: (String?) -> Unit) {
-        JingleExecutors.INSTANCE.networkIO.execute {
-            JingleApi.uploadImage(file).enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    JingleExecutors.INSTANCE.mainThread.execute {
-                        callback(null)
-                    }
-                }
-
-                override fun onResponse(call: Call, response: Response) {
-                    JingleExecutors.INSTANCE.mainThread.execute {
-                        if (response.isSuccessful) {
-                            val fileName = file.name
-                            personFields.bigPhotoName = fileName
-                            callback(fileName)
-                        }
-                    }
-                }
-            })
-        }
+        ImageUploader.upload(file, callback)
     }
 
     fun retry() {

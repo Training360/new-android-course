@@ -21,6 +21,8 @@ class PersonDetailViewModel(private val repository: PersonRepository): ViewModel
             }
         }
 
+    val email = "george@clooney.com"
+
     init {
         repoSource = repository.getPerson(userId)
         user.addSource(repoSource) {

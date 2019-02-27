@@ -56,6 +56,12 @@
         <argument
                 android:name="person"
                 app:argType="com.example.demodatingapp.viewmodel.PersonFields"/>
+
+        <action
+                android:id="@+id/action_fragment_edit_person_to_fragment_detail"
+                app:destination="@id/fragment_detail"
+                app:popUpTo="@id/fragment_detail"
+                app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
