@@ -32,12 +32,20 @@ class AddPersonFragment: ContentEditingParent() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_person, container, false)
+
         binding.addImageButton.setOnClickListener {
             imageChooser.startChoosing()
         }
+
         binding.finishAddPersonButton.setOnClickListener {
             if (viewModel.validate()) {
                 viewModel.personFields.location = LocationLiveData(context!!).lastLocation().place
+                viewModel.retry()
+            }
+        }
+
+        binding.retryCallback = object : RetryCallback {
+            override fun retry() {
                 viewModel.retry()
             }
         }
@@ -46,18 +54,23 @@ class AddPersonFragment: ContentEditingParent() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         viewModel = ViewModelProviders.of(this, PersonViewModelFactory(application()))
             .get(AddPersonViewModel::class.java)
+
         viewModel.addPerson.observe(this, Observer {
             binding.resource = it
             if (it.status == Status.SUCCESS) {
                 findNavController().popBackStack()
             }
         })
+
         binding.personFields = viewModel.personFields
+
         imageChooser = ImageChooser(this, arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
         ))
     }
 

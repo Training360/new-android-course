@@ -1,10 +1,14 @@
 package com.example.demodatingapp.util
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Environment
+import android.provider.MediaStore
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.example.demodatingapp.R
 import java.io.ByteArrayOutputStream
@@ -31,6 +35,7 @@ class ImageChooser(private val fragment: ContentEditingParent,
 
     companion object {
         const val REQUEST_CODE_PICK_IMAGE = 123
+        const val REQUEST_CODE_CAPTURE_IMAGE = 124
         const val REQUEST_CODE_NEEDED_PERMISSIONS = 11
     }
 
@@ -38,7 +43,7 @@ class ImageChooser(private val fragment: ContentEditingParent,
 
     override fun startChoosing() {
         if (PermissionHelper.hasPermissions(fragment.requireContext(), requiredPermissions)) {
-            pickImageFromGallery()
+            showImageSourceChooser()
         } else {
             fragment.requestPermissions(requiredPermissions, REQUEST_CODE_NEEDED_PERMISSIONS)
         }
@@ -50,14 +55,18 @@ class ImageChooser(private val fragment: ContentEditingParent,
         val context = fragment.requireContext()
         if (requestCode == REQUEST_CODE_NEEDED_PERMISSIONS) {
             if (PermissionHelper.hasPermissions(context, requiredPermissions)) {
-                pickImageFromGallery()
+                showImageSourceChooser()
             }
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val isOk = resultCode == Activity.RESULT_OK
-        if (requestCode == REQUEST_CODE_PICK_IMAGE && isOk && data != null) {
+        if (requestCode == REQUEST_CODE_CAPTURE_IMAGE && isOk) {
+            File(output).also {
+                fragment.onImageSelected(it)
+            }
+        } else if (requestCode == REQUEST_CODE_PICK_IMAGE && isOk && data != null) {
             data.data?.also {
                 val context = fragment.requireContext()
                 val bitmap = BitmapFactory.decodeStream(context.contentResolver.openInputStream(it))
@@ -78,6 +87,20 @@ class ImageChooser(private val fragment: ContentEditingParent,
         return file.absolutePath
     }
 
+    private fun showImageSourceChooser() {
+        val dialog = AlertDialog.Builder(fragment.requireContext())
+            .setItems(R.array.imageSourcePicker) { dialog, which ->
+                if (which == 0) {
+                    pickImageFromCamera()
+                } else {
+                    pickImageFromGallery()
+                }
+                dialog.dismiss()
+            }
+            .create()
+        dialog.show()
+    }
+
     private fun pickImageFromGallery() {
         val title = fragment.getString(R.string.image_chooser_title)
         Intent().also {
@@ -87,6 +110,30 @@ class ImageChooser(private val fragment: ContentEditingParent,
                 Intent.createChooser(it, title),
                 REQUEST_CODE_PICK_IMAGE
             )
+        }
+    }
+
+    private fun pickImageFromCamera() {
+        val context = fragment.requireContext()
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(context.packageManager).also {
+                val photoFile: File? = try {
+                    createImageFile()
+                } catch (e: IOException) {
+                    null
+                }
+                photoFile?.also { file ->
+                    val photoURI: Uri = FileProvider.getUriForFile(
+                        context,
+                        "com.example.demodatingapp.fileprovider",
+                        file)
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    fragment.startActivityForResult(takePictureIntent, REQUEST_CODE_CAPTURE_IMAGE)
+                }
+                if (photoFile != null) {
+                    output = photoFile.absolutePath
+                }
+            }
         }
     }
 
