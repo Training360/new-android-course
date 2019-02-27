@@ -13,13 +13,17 @@ import com.example.demodatingapp.adapter.GalleryListener
 import com.example.demodatingapp.databinding.FragmentDetailBinding
 import com.example.demodatingapp.util.RetryCallback
 import com.example.demodatingapp.viewmodel.PersonDetailViewModel
+import com.example.demodatingapp.viewmodel.PersonFields
 import com.example.demodatingapp.viewmodel.factory.PersonViewModelFactory
+import com.example.demodatingapp.vo.Person
 
 class DetailFragment: Fragment(), GalleryListener {
 
     lateinit var viewModel: PersonDetailViewModel
 
     lateinit var mBinding: FragmentDetailBinding
+
+    private lateinit var person: Person
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -34,6 +38,8 @@ class DetailFragment: Fragment(), GalleryListener {
         viewModel.user.observe(this, Observer {
             mBinding.personResource = it
             if (it?.data != null) {
+                person = it.data
+
                 mBinding.gallery.mViewPager.adapter = GalleryAdapter(it.data.galleryImages, mBinding.root.context, this)
                 mBinding.personDetailHeader.binding.person = it.data
                 mBinding.personDetailIntroduction.binding.person = it.data
@@ -45,6 +51,11 @@ class DetailFragment: Fragment(), GalleryListener {
             override fun retry() {
                 viewModel.retry()
             }
+        }
+
+        mBinding.editPersonButton.setOnClickListener {
+            val personFields = PersonFields(person)
+            findNavController().navigate(DetailFragmentDirections.navigationToEdit(personFields))
         }
 
         return mBinding.root

@@ -23,7 +23,18 @@
                 android:layout_height="match_parent"
                 app:resource="@{personResource}"/>
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/edit_person_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:src="@drawable/baseline_edit_24"
+                android:tint="@android:color/white"
+                app:layout_anchor="@id/scrollView"
+                app:layout_anchorGravity="bottom|end"/>
+
         <androidx.core.widget.NestedScrollView
+                android:id="@+id/scrollView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">

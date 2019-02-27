@@ -20,20 +20,19 @@ import okhttp3.Callback
 import okhttp3.Response
 import java.io.File
 import java.io.IOException
+import java.io.Serializable
 
-class PersonFields(): BaseObservable() {
+class PersonFields(): BaseObservable(), Serializable {
 
-    private var currentUser = Person(
-        0,
-        "clooney_avatar.png",
-        "György",
-        4,
-        "Informatikus",
-        27,
-        "Arra gondoltam, hogy valami jó olaszos kaja ki tudja hozni az emberek valódi énjét.",
-        arrayOf("clooney2.png", "clooney3.png"),
-        Place(52.232357, 21.152927)
-    )
+    constructor(person: Person): this() {
+        job = person.job
+        rating = person.rating
+        age = person.age
+        introduction = person.introduction
+        displayName = person.name
+        location = person.lastLocation
+        bigPhotoName = person.galleryImages.first()
+    }
 
     @Bindable
     var job = String()
@@ -79,7 +78,7 @@ class PersonFields(): BaseObservable() {
             }
         }
 
-    val displayName = currentUser!!.name
+    lateinit var displayName: String
 
     var bigPhotoName: String? = null
 

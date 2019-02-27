@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.example.demodatingapp.db.dao.PersonDao
 import com.example.demodatingapp.vo.Person
 
-@Database(entities = [Person::class], version = 2)
+@Database(entities = [Person::class], version = 3)
 @TypeConverters(com.example.demodatingapp.util.TypeConverters::class)
 abstract class JingleDatabase: RoomDatabase() {
     abstract fun personDao(): PersonDao

@@ -42,6 +42,20 @@
             android:id="@+id/navigation_to_gallery"
             app:destination="@id/fragment_gallery"/>
 
+        <action
+                android:id="@+id/navigation_to_edit"
+                app:destination="@id/fragment_edit_person"/>
+
+    </fragment>
+
+    <fragment
+            android:id="@+id/fragment_edit_person"
+            android:name="com.example.demodatingapp.fragment.EditPersonFragment"
+            tools:layout="@layout/fragment_edit_person">
+
+        <argument
+                android:name="person"
+                app:argType="com.example.demodatingapp.viewmodel.PersonFields"/>
     </fragment>
 
     <fragment

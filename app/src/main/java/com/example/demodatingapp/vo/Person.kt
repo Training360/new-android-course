@@ -20,7 +20,8 @@ data class Person(
     val age: Int,
     val introduction: String,
     @SerializedName("images") val galleryImages: Array<String>,
-    @Embedded val lastLocation: Place
+    @Embedded val lastLocation: Place,
+    val owner: String
 )
 
 data class Place(val latitude: Double, val longitude: Double)
