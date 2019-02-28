@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
+import com.crashlytics.android.Crashlytics
 import com.example.demodatingapp.R
 import com.example.demodatingapp.adapter.PersonAdapter
 import com.example.demodatingapp.databinding.FragmentListBinding
@@ -41,6 +42,8 @@ class ListFragment: Fragment() {
         }
 
         setHasOptionsMenu(true)
+
+        Crashlytics.getInstance().crash()
 
         return mBinding.root
     }

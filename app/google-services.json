@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1047121335486",
+    "firebase_url": "https://t360-jingleapp.firebaseio.com",
+    "project_id": "t360-jingleapp",
+    "storage_bucket": "t360-jingleapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1047121335486:android:39e4ff54324b712b",
+        "android_client_info": {
+          "package_name": "com.example.demodatingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1047121335486-ktn94m8mhn76pr4lo2am7ir2tn4469tc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.demodatingapp",
+            "certificate_hash": "84e4395426c9948e9884ce8b3aa6694abe0b3301"
+          }
+        },
+        {
+          "client_id": "1047121335486-e56qn725m1a2tfdecdfvr4hf7qpimtg4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCahO84XdJwd4JARMzX4jbejCwQiKfCJ4U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1047121335486-e56qn725m1a2tfdecdfvr4hf7qpimtg4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
